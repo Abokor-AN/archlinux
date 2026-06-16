@@ -1,0 +1,23 @@
+# niri-base swaylock — retro-82
+ignore-empty-password
+indicator
+indicator-radius=100
+indicator-thickness=8
+
+color=05182e
+inside-color=05182e
+ring-color=134e5a
+line-color=05182e
+text-color=f6dcac
+
+key-hl-color=faa968
+ring-ver-color=faa968
+inside-ver-color=05182e
+text-ver-color=f6dcac
+
+ring-wrong-color=f85525
+inside-wrong-color=05182e
+text-wrong-color=f85525
+
+ring-clear-color=028391
+inside-clear-color=05182e

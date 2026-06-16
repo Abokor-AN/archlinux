@@ -1,0 +1,43 @@
+[window]
+padding = { x = 10, y = 10 }
+opacity = 0.95
+decorations = "none"
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+# retro-82 (from omarchy themes/retro-82/colors.toml)
+[colors.primary]
+background = "#05182e"
+foreground = "#f6dcac"
+
+[colors.cursor]
+cursor = "#f6dcac"
+
+[colors.selection]
+background = "#faa968"
+text = "#00172e"
+
+[colors.normal]
+black   = "#303442"
+red     = "#f85525"
+green   = "#028391"
+yellow  = "#e97b3c"
+blue    = "#faa968"
+magenta = "#3f8f8a"
+cyan    = "#8cbfb8"
+white   = "#a7c9c6"
+
+[colors.bright]
+black   = "#134e5a"
+red     = "#f85525"
+green   = "#028391"
+yellow  = "#e97b3c"
+blue    = "#faa968"
+magenta = "#3f8f8a"
+cyan    = "#8cbfb8"
+white   = "#f6dcac"

@@ -1,0 +1,198 @@
+// niri-base — Omarchy-flavored Niri config (retro-82).
+// KDL format: https://github.com/YaLTeR/niri/wiki/Configuration
+// This is yours after install — edit freely.
+
+input {
+    keyboard {
+        xkb {
+            // Omarchy default. Change to "fr" etc. as needed.
+            layout "us"
+            // Compose key on Caps (matches Omarchy's kb_options=compose:caps).
+            options "compose:caps"
+        }
+    }
+
+    touchpad {
+        tap
+        // Omarchy keeps natural-scroll off by default.
+        // natural-scroll
+    }
+
+    mouse {}
+
+    // Wake displays on input (Omarchy's key/mouse DPMS behavior).
+    // Niri wakes monitors on input automatically.
+}
+
+// Per-output settings. Run `niri msg outputs` to discover names.
+// output "eDP-1" {
+//     scale 1.0
+//     mode "1920x1080@60.000"
+// }
+
+layout {
+    // Omarchy: gaps_in 5 / gaps_out 10 → a single niri gap.
+    gaps 10
+    center-focused-column "never"
+
+    // Omarchy scrolling column_width ~0.49.
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+
+    // retro-82 focus ring.
+    focus-ring {
+        width 2
+        active-color "#faa968"
+        inactive-color "#134e5a"
+    }
+
+    border {
+        off
+    }
+}
+
+// ---- Autostart -------------------------------------------------------------
+// X11 app support: niri has no built-in Xwayland, so run the satellite and
+// point DISPLAY at it (see the environment block below).
+spawn-at-startup "xwayland-satellite" ":0"
+spawn-at-startup "waybar"
+spawn-at-startup "mako"
+spawn-at-startup "swaybg" "-i" "/home/USERNAME/.config/niri/wallpaper.jpg" "-m" "fill"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "swayosd-server"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "swayidle" "-w" \
+    "timeout" "300" "swaylock -f" \
+    "timeout" "600" "niri msg action power-off-monitors" \
+    "before-sleep" "swaylock -f"
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+environment {
+    // Must match the display passed to xwayland-satellite above.
+    DISPLAY ":0"
+    QT_QPA_PLATFORM "wayland"
+    MOZ_ENABLE_WAYLAND "1"
+}
+
+cursor {
+    xcursor-size 24
+}
+
+// ---- Window rules ----------------------------------------------------------
+// Light opacity touch, similar in spirit to Omarchy's default-opacity.
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+// ---- Key bindings (ported from Omarchy's Hyprland binds) -------------------
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // Launchers / apps
+    Mod+Space       { spawn "fuzzel"; }
+    Mod+Return      { spawn "alacritty"; }
+    Mod+W           { close-window; }
+    Mod+Ctrl+V      { spawn "sh" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
+
+    // Tiling / focus (Omarchy arrows + HJKL)
+    Mod+Left        { focus-column-left; }
+    Mod+Right       { focus-column-right; }
+    Mod+Up          { focus-window-up; }
+    Mod+Down        { focus-window-down; }
+    Mod+H           { focus-column-left; }
+    Mod+L           { focus-column-right; }
+    Mod+K           { focus-window-up; }
+    Mod+J           { focus-window-down; }
+
+    // Move windows/columns (Omarchy SUPER+SHIFT swapwindow)
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+Up    { move-window-up; }
+    Mod+Shift+Down  { move-window-down; }
+
+    // Column management (niri-native equivalents of grouping/splitting)
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Ctrl+Comma   { consume-window-into-column; }
+    Mod+Ctrl+Period  { expel-window-from-column; }
+
+    // Fullscreen / size (Omarchy: F fullscreen, ALT+F full width)
+    Mod+F           { maximize-column; }
+    Mod+Shift+F     { fullscreen-window; }
+    Mod+R           { switch-preset-column-width; }
+    Mod+Minus       { set-column-width "-10%"; }
+    Mod+Equal       { set-column-width "+10%"; }
+
+    // Workspaces 1..10 (Omarchy SUPER+[1-9,0])
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+0 { move-column-to-workspace 10; }
+
+    // Cycle workspaces (Omarchy SUPER+TAB)
+    Mod+Tab         { focus-workspace-down; }
+    Mod+Shift+Tab   { focus-workspace-up; }
+
+    // Volume / brightness via swayosd (Omarchy media binds)
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "raise"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume" "lower"; }
+    XF86AudioMute        allow-when-locked=true { spawn "swayosd-client" "--output-volume" "mute-toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "swayosd-client" "--input-volume" "mute-toggle"; }
+    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "5%+"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+
+    // Media keys (Omarchy playerctl binds)
+    XF86AudioNext  { spawn "playerctl" "next"; }
+    XF86AudioPrev  { spawn "playerctl" "previous"; }
+    XF86AudioPlay  { spawn "playerctl" "play-pause"; }
+    XF86AudioPause { spawn "playerctl" "play-pause"; }
+
+    // Notifications (Omarchy makoctl binds)
+    Mod+Comma            { spawn "makoctl" "dismiss"; }
+    Mod+Shift+Comma      { spawn "makoctl" "dismiss" "--all"; }
+
+    // Night light toggle (replaces Omarchy hyprsunset; SUPER+CTRL+N)
+    Mod+Ctrl+N { spawn "sh" "-c" "pkill wlsunset || wlsunset -t 4000"; }
+
+    // Screenshots (niri-native; Omarchy used grim/satty)
+    Print       { screenshot; }
+    Mod+Print   { screenshot-window; }
+    Shift+Print { screenshot-screen; }
+
+    // Lock + session (Omarchy SUPER+CTRL+L)
+    Mod+Ctrl+L  { spawn "swaylock"; }
+    Mod+Shift+E { quit; }
+
+    // Power off monitors manually
+    Mod+Ctrl+P  { power-off-monitors; }
+}
+
+// ---- Not ported from Omarchy --------------------------------------------------
+// These rely on Hyprland concepts or unported omarchy-* scripts and were left
+// out intentionally: window groups, special/scratchpad workspace, dwindle
+// togglesplit, cursor zoom (hyprctl), omarchy-menu, voxtype dictation,
+// reminders, weather, theme switching, and the omarchy update flow.

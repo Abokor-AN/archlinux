@@ -1,0 +1,60 @@
+/* niri-base waybar — retro-82 */
+
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: #f6dcac;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  background: #05182e;
+  margin: 6px 0;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+
+.modules-left  { margin-left: 10px; }
+.modules-right { margin-right: 10px; }
+
+#workspaces button {
+  color: #134e5a;
+  padding: 0 6px;
+}
+
+#workspaces button.active {
+  color: #faa968;
+}
+
+#workspaces button:hover {
+  background: #303442;
+  color: #f6dcac;
+}
+
+#clock,
+#cpu,
+#network,
+#pulseaudio,
+#bluetooth,
+#battery,
+#tray,
+#custom-expand-icon {
+  padding: 0 8px;
+  color: #f6dcac;
+}
+
+#battery.warning {
+  color: #e97b3c;
+}
+
+#battery.critical {
+  color: #f85525;
+}
