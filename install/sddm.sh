@@ -8,10 +8,15 @@ echo "==> Configuring SDDM"
 
 sudo mkdir -p /etc/sddm.conf.d
 
+# NOTE: do NOT set GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
+# here. layer-shell is only valid with a compositor that implements wlr-layer-shell
+# (e.g. kwin_wayland) AND requires the layer-shell-qt package. weston's
+# fullscreen-shell does not provide layer-shell, so combining the two gives a
+# black screen with a frozen cursor. weston's fullscreen-shell already makes the
+# greeter fill the screen, so no shell-integration override is needed.
 sudo tee /etc/sddm.conf.d/10-wayland.conf >/dev/null <<'EOF'
 [General]
 DisplayServer=wayland
-GreeterEnvironment=QT_WAYLAND_SHELL_INTEGRATION=layer-shell
 
 [Wayland]
 CompositorCommand=weston --shell=fullscreen-shell.so --no-config
