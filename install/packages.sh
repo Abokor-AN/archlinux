@@ -7,8 +7,6 @@ echo "==> Installing packages"
 packages=(
   # --- Compositor / session ---
   niri
-  sddm
-  weston              # lightweight compositor used only for SDDM's Wayland greeter
   xorg-xwayland       # X11 server pieces
   xwayland-satellite  # glue that lets X11 apps run under Niri (niri has no built-in Xwayland)
 

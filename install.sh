@@ -38,7 +38,7 @@ source "$NIRI_BASE_PATH/install/network.sh"
 source "$NIRI_BASE_PATH/install/firewall.sh"
 source "$NIRI_BASE_PATH/install/services.sh"
 source "$NIRI_BASE_PATH/install/keyring.sh"
-source "$NIRI_BASE_PATH/install/sddm.sh"
+source "$NIRI_BASE_PATH/install/autologin.sh"
 
 if [[ $NIRI_BASE_WITH_PLYMOUTH == true ]]; then
   source "$NIRI_BASE_PATH/install/plymouth.sh"
@@ -47,5 +47,5 @@ else
 fi
 
 echo
-echo "==> Done. Reboot, pick the \"Niri\" session in SDDM, and log in."
+echo "==> Done. Reboot — you'll be auto-logged in on tty1 and Niri starts directly."
 echo "    Super+Space = launcher · Super+Return = terminal · Super+W = close."
