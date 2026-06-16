@@ -77,7 +77,7 @@ packages=(
   qt6-wayland
   kvantum-qt5
   gnome-themes-extra
-  yaru-icon-theme
+  papirus-icon-theme
 
   # --- Fonts ---
   ttf-jetbrains-mono-nerd
